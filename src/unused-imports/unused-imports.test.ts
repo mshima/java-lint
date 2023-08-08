@@ -85,20 +85,20 @@ public class HelloWorldExample {
 }
 `),
       ).toMatchInlineSnapshot(`
-    "package my.java.project;
+        "package my.java.project;
 
-    import my.java.project.Used1;
-    import my.java.project.Used2;
 
-    public class HelloWorldExample {
-        public static void main(Used1 args[]) {
-            List<Used2> arguments = java.util.Arrays.asList(args);
-            System.out.println(\\"Arguments:\\");
-            System.out.println(arguments);
+
+
+        public class HelloWorldExample {
+            public static void main(Used1 args[]) {
+                List<Used2> arguments = java.util.Arrays.asList(args);
+                System.out.println(\\"Arguments:\\");
+                System.out.println(arguments);
+            }
         }
-    }
-    "
-  `);
+        "
+      `);
     });
   });
 });
