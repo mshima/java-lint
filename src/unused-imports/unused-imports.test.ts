@@ -20,7 +20,7 @@ public class HelloWorldExample {
 }
 `;
 
-describe('', () => {
+describe('java-lint', () => {
   it('collectGlobalIdentifiersNodes', () => {
     expect(collectGlobalIdentifiersNodes(parse(source)).map((el) => el.image)).toMatchInlineSnapshot(`
       [
@@ -46,8 +46,9 @@ describe('', () => {
       ]
     `);
   });
-  it('removeUnusedImports', () => {
-    expect(removeUnusedImports(source)).toMatchInlineSnapshot(`
+  describe('removeUnusedImports', () => {
+    it('should remove unused imports', () => {
+      expect(removeUnusedImports(source)).toMatchInlineSnapshot(`
       "package my.java.project;
 
       import java.util.*;
@@ -66,5 +67,38 @@ describe('', () => {
       }
       "
     `);
+    });
+
+    it('should remove same package imports', () => {
+      expect(
+        removeUnusedImports(`package my.java.project;
+
+import my.java.project.Used1;
+import my.java.project.Used2;
+
+public class HelloWorldExample {
+    public static void main(Used1 args[]) {
+        List<Used2> arguments = java.util.Arrays.asList(args);
+        System.out.println("Arguments:");
+        System.out.println(arguments);
+    }
+}
+`),
+      ).toMatchInlineSnapshot(`
+    "package my.java.project;
+
+    import my.java.project.Used1;
+    import my.java.project.Used2;
+
+    public class HelloWorldExample {
+        public static void main(Used1 args[]) {
+            List<Used2> arguments = java.util.Arrays.asList(args);
+            System.out.println(\\"Arguments:\\");
+            System.out.println(arguments);
+        }
+    }
+    "
+  `);
+    });
   });
 });

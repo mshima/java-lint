@@ -35,9 +35,18 @@ export const removeUnusedImports = (content: string) => {
   if (!importDeclarationNodes) {
     return content;
   }
+  const filePackage = (
+    cstNode.children.ordinaryCompilationUnit[0] as any
+  ).children.packageDeclaration[0].children.Identifier.map((identifier: any) => identifier.image).join('.');
   const identifiers = [...new Set(collectGlobalIdentifiersNodes(cstNode).map((el) => el.image))];
   const unusedImportNodes: any[] = importDeclarationNodes
     .filter((importDec) => !importDec.children.Star)
+    .filter(
+      (importDec) =>
+        importDec.children.packageOrTypeName[0].children.Identifier.map((el: any) => el.image)
+          .slice(0, -1)
+          .join('.') !== filePackage,
+    )
     .map((imp) => {
       const packageOrTypeName = imp.children.packageOrTypeName[0];
       return [packageOrTypeName.children.Identifier[packageOrTypeName.children.Identifier.length - 1].image, imp];
