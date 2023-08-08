@@ -100,5 +100,23 @@ public class HelloWorldExample {
         "
       `);
     });
+
+    it('should not fail with emptyStatement', () => {
+      expect(
+        removeUnusedImports(`package my.java.project;
+
+import my.java.project.Used1;;
+
+public class HelloWorldExample {}
+`),
+      ).toMatchInlineSnapshot(`
+        "package my.java.project;
+
+        ;
+
+        public class HelloWorldExample {}
+        "
+      `);
+    });
   });
 });

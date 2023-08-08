@@ -40,7 +40,7 @@ export const removeUnusedImports = (content: string) => {
   ).children.packageDeclaration[0].children.Identifier.map((identifier: any) => identifier.image).join('.');
   const identifiers = [...new Set(collectGlobalIdentifiersNodes(cstNode).map((el) => el.image))];
   const unusedImportNodes: any[] = importDeclarationNodes
-    .filter((importDec) => !importDec.children.Star)
+    .filter((importDec) => !importDec.children.Star && !importDec.children.emptyStatement)
     .map((imp) => {
       const packageOrTypeName = imp.children.packageOrTypeName[0];
       return [packageOrTypeName.children.Identifier[packageOrTypeName.children.Identifier.length - 1].image, imp];
