@@ -6,6 +6,7 @@
   "typings": "./dist/index.js",
   "homepage": "https://github.com/mshima/java-lint",
   "bugs": "https://github.com/mshima/java-lint/issues",
+  "type": "module",
   "files": [
     "dist"
   ],
