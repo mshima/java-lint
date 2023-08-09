@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "test": "vitest",
+    "test": "vitest run",
     "lint": "eslint . --ext .ts --fix --ignore-path .gitignore",
     "format": "prettier --write package.json vitest.config.ts .prettierrc.json .eslintrc.cjs tsconfig.json src/"
   },
