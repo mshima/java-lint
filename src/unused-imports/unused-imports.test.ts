@@ -49,24 +49,22 @@ describe('java-lint', () => {
   describe('removeUnusedImports', () => {
     it('should remove unused imports', () => {
       expect(removeUnusedImports(source)).toMatchInlineSnapshot(`
-      "package my.java.project;
+        "package my.java.project;
 
-      import java.util.*;
+        import java.util.*;
 
-      import project.Used1;
+        import project.Used1;
+        import project.Used2;
 
-      import project.Used2;
-
-
-      public class HelloWorldExample {
-          public static void main(Used1 args[]) {
-              List<Used2> arguments = java.util.Arrays.asList(args);
-              System.out.println(\\"Arguments:\\");
-              System.out.println(arguments);
-          }
-      }
-      "
-    `);
+        public class HelloWorldExample {
+            public static void main(Used1 args[]) {
+                List<Used2> arguments = java.util.Arrays.asList(args);
+                System.out.println(\\"Arguments:\\");
+                System.out.println(arguments);
+            }
+        }
+        "
+      `);
     });
 
     it('should remove same package imports', () => {
@@ -86,8 +84,6 @@ public class HelloWorldExample {
 `),
       ).toMatchInlineSnapshot(`
         "package my.java.project;
-
-
 
 
         public class HelloWorldExample {
@@ -111,7 +107,6 @@ public class HelloWorldExample {}
 `),
       ).toMatchInlineSnapshot(`
         "package my.java.project;
-
         ;
 
         public class HelloWorldExample {}

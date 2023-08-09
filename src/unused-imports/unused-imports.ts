@@ -58,9 +58,11 @@ export const removeUnusedImports = (content: string) => {
   unusedImportNodes.sort((a, b) => b.location.startOffset - a.location.startOffset);
 
   for (const unusedImport of unusedImportNodes) {
-    content = `${content.slice(0, unusedImport.location.startOffset)}${content.slice(
-      unusedImport.location.endOffset + 1,
-    )}`;
+    let { startOffset } = unusedImport.location;
+    if (content.charAt(startOffset - 1) === '\n') {
+      startOffset--;
+    }
+    content = `${content.slice(0, startOffset)}${content.slice(unusedImport.location.endOffset + 1)}`;
   }
   return content;
 };
