@@ -1,6 +1,6 @@
 {
   "name": "java-lint",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Java lint utilities",
   "exports": "./dist/index.js",
   "typings": "./dist/index.js",
