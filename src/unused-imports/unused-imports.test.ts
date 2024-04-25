@@ -22,7 +22,7 @@ public class HelloWorldExample {
 
 describe('java-lint', () => {
   it('collectGlobalIdentifiersNodes', () => {
-    expect(collectGlobalIdentifiersNodes(parse(source)).map((el) => el.image)).toMatchInlineSnapshot(`
+    expect(collectGlobalIdentifiersNodes(parse(source))).toMatchInlineSnapshot(`
       [
         "HelloWorldExample",
         "main",
@@ -34,15 +34,10 @@ describe('java-lint', () => {
         "System",
         "out",
         "println",
-        "System",
-        "out",
-        "println",
         "java",
         "util",
         "Arrays",
         "asList",
-        "arguments",
-        "args",
       ]
     `);
   });
@@ -110,6 +105,32 @@ public class HelloWorldExample {}
         ;
 
         public class HelloWorldExample {}
+        "
+      `);
+    });
+
+    it('should not remove import static when', () => {
+      expect(
+        removeUnusedImports(`package my.java.project;
+
+import static org.mockito.Mockito.when;
+
+public class HelloWorldExample {
+    public static void main() {
+        when();
+    }
+}
+`),
+      ).toMatchInlineSnapshot(`
+        "package my.java.project;
+
+        import static org.mockito.Mockito.when;
+
+        public class HelloWorldExample {
+            public static void main() {
+                when();
+            }
+        }
         "
       `);
     });

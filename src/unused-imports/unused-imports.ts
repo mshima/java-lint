@@ -7,9 +7,9 @@ const skippedTypes = ['packageDeclaration', 'importDeclaration'];
  * @param cstNode
  * @returns
  */
-export const collectGlobalIdentifiersNodes = (cstNode: CstNode): CstElement[] => {
+export const collectGlobalIdentifiersNodes = (cstNode: CstNode): string[] => {
   const nodes = [cstNode];
-  const identifiers: CstElement[] = [];
+  const identifiers: Set<string> = new Set();
 
   for (let node; (node = nodes.shift()); ) {
     for (const identifier of Object.keys(node.children)) {
@@ -17,8 +17,19 @@ export const collectGlobalIdentifiersNodes = (cstNode: CstNode): CstElement[] =>
         .filter((element: CstElement) => !(element as any).name || !skippedTypes.includes((element as any).name))
         .forEach((element: CstElement) => {
           if ('image' in element) {
-            if (element.tokenType.name === 'Identifier' && element.tokenType.isParent) {
-              identifiers.push(element);
+            if (element.image) {
+              const tokenTypes = [element.tokenType];
+              if (Array.isArray(element.tokenType.LONGER_ALT)) {
+                tokenTypes.push(...element.tokenType.LONGER_ALT);
+              } else if (element.tokenType.LONGER_ALT) {
+                tokenTypes.push(element.tokenType.LONGER_ALT);
+              }
+              if (tokenTypes.some(({ name, isParent }) => name === 'Identifier' && isParent)) {
+                const categories = tokenTypes.map(({ CATEGORIES }) => CATEGORIES).flat();
+                if (!categories.some((cat) => ['Keyword'].includes(cat.name))) {
+                  identifiers.add(element.image);
+                }
+              }
             }
           } else {
             nodes.push(element);
@@ -26,7 +37,7 @@ export const collectGlobalIdentifiersNodes = (cstNode: CstNode): CstElement[] =>
         });
     }
   }
-  return identifiers;
+  return [...identifiers];
 };
 
 export const removeUnusedImports = (content: string) => {
@@ -38,7 +49,7 @@ export const removeUnusedImports = (content: string) => {
   const filePackage = (
     cstNode.children.ordinaryCompilationUnit[0] as any
   ).children.packageDeclaration[0].children.Identifier.map((identifier: any) => identifier.image).join('.');
-  const identifiers = [...new Set(collectGlobalIdentifiersNodes(cstNode).map((el) => (el as any).image))];
+  const identifiers = collectGlobalIdentifiersNodes(cstNode);
   const unusedImportNodes: any[] = importDeclarationNodes
     .filter((importDec) => !importDec.children.Star && !importDec.children.emptyStatement)
     .map((imp) => {
