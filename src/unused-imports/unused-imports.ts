@@ -26,7 +26,7 @@ export const collectGlobalIdentifiersNodes = (cstNode: CstNode): string[] => {
               }
               if (tokenTypes.some(({ name, isParent }) => name === 'Identifier' && isParent)) {
                 const categories = tokenTypes.map(({ CATEGORIES }) => CATEGORIES).flat();
-                if (!categories.some((cat) => ['Keyword'].includes(cat.name))) {
+                if (!categories.some((cat) => cat?.name === 'Keyword')) {
                   identifiers.add(element.image);
                 }
               }
