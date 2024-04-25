@@ -59,7 +59,7 @@ describe('java-lint', () => {
         public class HelloWorldExample {
             public static void main(Used1 args[]) {
                 List<Used2> arguments = java.util.Arrays.asList(args);
-                System.out.println(\\"Arguments:\\");
+                System.out.println("Arguments:");
                 System.out.println(arguments);
             }
         }
@@ -89,7 +89,7 @@ public class HelloWorldExample {
         public class HelloWorldExample {
             public static void main(Used1 args[]) {
                 List<Used2> arguments = java.util.Arrays.asList(args);
-                System.out.println(\\"Arguments:\\");
+                System.out.println("Arguments:");
                 System.out.println(arguments);
             }
         }

@@ -1,4 +1,4 @@
-import { CstNode, parse } from 'java-parser';
+import { type CstElement, type CstNode, parse } from 'java-parser';
 
 const skippedTypes = ['packageDeclaration', 'importDeclaration'];
 
@@ -7,15 +7,15 @@ const skippedTypes = ['packageDeclaration', 'importDeclaration'];
  * @param cstNode
  * @returns
  */
-export const collectGlobalIdentifiersNodes = (cstNode: CstNode) => {
+export const collectGlobalIdentifiersNodes = (cstNode: CstNode): CstElement[] => {
   const nodes = [cstNode];
-  const identifiers: any[] = [];
+  const identifiers: CstElement[] = [];
 
   for (let node; (node = nodes.shift()); ) {
     for (const identifier of Object.keys(node.children)) {
       node.children[identifier]
-        .filter((element: any) => !element.name || !skippedTypes.includes(element.name))
-        .forEach((element) => {
+        .filter((element: CstElement) => !(element as any).name || !skippedTypes.includes((element as any).name))
+        .forEach((element: CstElement) => {
           if ('image' in element) {
             if (element.tokenType.name === 'Identifier' && element.tokenType.isParent) {
               identifiers.push(element);
@@ -38,7 +38,7 @@ export const removeUnusedImports = (content: string) => {
   const filePackage = (
     cstNode.children.ordinaryCompilationUnit[0] as any
   ).children.packageDeclaration[0].children.Identifier.map((identifier: any) => identifier.image).join('.');
-  const identifiers = [...new Set(collectGlobalIdentifiersNodes(cstNode).map((el) => el.image))];
+  const identifiers = [...new Set(collectGlobalIdentifiersNodes(cstNode).map((el) => (el as any).image))];
   const unusedImportNodes: any[] = importDeclarationNodes
     .filter((importDec) => !importDec.children.Star && !importDec.children.emptyStatement)
     .map((imp) => {

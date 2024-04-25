@@ -13,13 +13,15 @@ const dirtySource = ```package my.project;
 import my.project.pack.Unused;
 
 class Foo {}
-```
+```;
 
 removeUnusedImports(dirtySource);
 
-expect(dirtySource).toMatch(```package my.project;
+expect(dirtySource).toMatch(
+  ```package my.project;
 
 
 class Foo {}
-```);
+```,
+);
 ````
