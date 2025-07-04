@@ -30,7 +30,7 @@
     "format": "prettier --write package.json vitest.config.ts .prettierrc.json .eslintrc.cjs tsconfig.json src/"
   },
   "dependencies": {
-    "java-parser": "~2.3.0"
+    "java-parser": "~3.0.1"
   },
   "engines": {
     "node": "^18.13.0 || >= 20.2.0"
