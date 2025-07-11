@@ -27,7 +27,7 @@
     "prepare": "npm run build",
     "test": "vitest run",
     "lint": "eslint . --fix",
-    "format": "prettier --write package.json vitest.config.ts .prettierrc.json .eslintrc.cjs tsconfig.json src/"
+    "format": "prettier --write package.json vitest.config.ts .prettierrc.json eslint.config.js tsconfig.json src/"
   },
   "dependencies": {
     "java-parser": "~2.3.4"
@@ -36,17 +36,17 @@
     "node": "^18.13.0 || >= 20.2.0"
   },
   "devDependencies": {
-    "@eslint/js": "^8.57.0",
-    "@rushstack/eslint-patch": "^1.10.2",
+    "@eslint/js": "^9.30.1",
+    "@rushstack/eslint-patch": "^1.12.0",
     "@tsconfig/node18": "^18.2.4",
-    "@types/node": "^18.19.31",
-    "eslint": "^8.57.0",
-    "globals": "^15.0.0",
+    "@types/node": "^24.0.13",
+    "eslint": "^9.30.1",
+    "globals": "^16.3.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.2.5",
-    "prettier-plugin-packagejson": "^2.5.0",
-    "typescript": "~5.1.6",
-    "typescript-eslint": "^7.7.1",
-    "vitest": "^1.5.2"
+    "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.18",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.36.0",
+    "vitest": "^3.2.4"
   }
 }
