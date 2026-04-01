@@ -6,7 +6,7 @@ import { parse as javaParser } from '../java-parser.js';
 import { javaProcessor } from './processor.js';
 import { noUnusedImports } from './rules/no-unused-imports/index.js';
 
-const name = 'eslint-plugin-java';
+const name = 'eslint-plugin-java-lang';
 const packageJsonPath = fileURLToPath(import.meta.resolve('../../package.json'));
 const version: string = (JSON.parse(readFileSync(packageJsonPath, 'utf-8')) as { version: string }).version;
 
@@ -15,12 +15,12 @@ const rules = {
 } satisfies Record<string, import('eslint').Rule.RuleModule>;
 
 /**
- * The eslint-plugin-java ESLint plugin.
+ * The eslint-plugin-java-lang ESLint plugin.
  *
  * @example
  * ```js
  * // eslint.config.js
- * import javaPlugin from 'eslint-plugin-java/plugin';
+ * import javaPlugin from 'eslint-plugin-java-lang/plugin';
  *
  * export default [
  *   javaPlugin.configs.recommended,
@@ -50,19 +50,19 @@ const plugin = {
 
 /**
  * Recommended flat-config configuration.
- * Applies the eslint-plugin-java plugin, its custom parser, the java processor, and the
+ * Applies the eslint-plugin-java-lang plugin, its custom parser, the java processor, and the
  * `no-unused-imports` rule to all `.java` files.
  */
 const recommended: Linter.Config = {
-  name: 'eslint-plugin-java/recommended',
+  name: 'eslint-plugin-java-lang/recommended',
   files: ['**/*.java'],
-  plugins: { 'eslint-plugin-java': plugin },
+  plugins: { 'eslint-plugin-java-lang': plugin },
   languageOptions: {
     parser: { parse: javaParser },
   },
   processor: javaProcessor,
   rules: {
-    'eslint-plugin-java/no-unused-imports': 'warn',
+    'eslint-plugin-java-lang/no-unused-imports': 'warn',
   },
 };
 
