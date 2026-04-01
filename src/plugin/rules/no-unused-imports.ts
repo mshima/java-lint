@@ -17,7 +17,7 @@ export const noUnusedImports: Rule.RuleModule = {
     docs: {
       description: 'Disallow unused Java import declarations',
       recommended: true,
-      url: 'https://github.com/mshima/java-lint',
+      url: 'https://github.com/mshima/eslint-plugin-java',
     },
     messages: {
       unusedImport: "Unused import '{{name}}'.",

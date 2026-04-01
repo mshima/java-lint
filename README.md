@@ -1,4 +1,4 @@
-# java-lint
+# eslint-plugin-java
 
 ## Unused imports
 
@@ -6,7 +6,7 @@ Current implementation has a lazy implemented global identifiers collectors.
 False negatives may happen.
 
 ````js
-import { removeUnusedImports } from 'java-lint';
+import { removeUnusedImports } from 'eslint-plugin-java';
 
 const dirtySource = ```package my.project;
 
