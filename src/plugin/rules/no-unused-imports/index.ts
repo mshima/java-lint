@@ -1,7 +1,7 @@
 import type { Rule } from 'eslint';
 
-import { parser } from '../processor.js';
-import { findUnusedImports } from '../../unused-imports/analysis.js';
+import { parser } from '../../processor.js';
+import { findUnusedImports } from './analysis.js';
 
 /**
  * ESLint rule that reports (and auto-fixes) unused Java import declarations.
