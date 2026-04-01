@@ -4,7 +4,7 @@ import type { Linter } from 'eslint';
 
 import { parse as javaParser } from '../java-parser.js';
 import { javaProcessor } from './processor.js';
-import { noUnusedImports } from './rules/no-unused-imports.js';
+import { noUnusedImports } from './rules/no-unused-imports/index.js';
 
 const name = 'eslint-plugin-java';
 const packageJsonPath = fileURLToPath(import.meta.resolve('../../package.json'));
