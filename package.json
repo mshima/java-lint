@@ -31,7 +31,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && npm run copy:wasm",
-    "copy:wasm": "cpy node_modules/web-tree-sitter/web-tree-sitter.wasm node_modules/tree-sitter-java-orchard/tree-sitter-java_orchard.wasm wasm/ --flat",
+    "copy:wasm": "cpy node_modules/tree-sitter-java-orchard/tree-sitter-java_orchard.wasm wasm/ --flat",
     "prepare": "npm run build",
     "test": "vitest run --coverage",
     "lint": "eslint . --fix",

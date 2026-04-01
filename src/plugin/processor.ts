@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import type { Linter } from 'eslint';
 import { Language, Parser } from 'web-tree-sitter';
 
-const treeSitterWasmPath = fileURLToPath(new URL('../../wasm/web-tree-sitter.wasm', import.meta.url));
+const treeSitterWasmPath = fileURLToPath(import.meta.resolve('web-tree-sitter/web-tree-sitter.wasm'));
 await Parser.init({ locateFile: () => treeSitterWasmPath });
 
 const javaGrammarWasmPath = fileURLToPath(new URL('../../wasm/tree-sitter-java_orchard.wasm', import.meta.url));

@@ -7,7 +7,7 @@ import { findUnusedImports } from './analysis.js';
 
 export { findUnusedImports } from './analysis.js';
 
-const treeSitterWasmPath = fileURLToPath(new URL('../../wasm/web-tree-sitter.wasm', import.meta.url));
+const treeSitterWasmPath = fileURLToPath(import.meta.resolve('web-tree-sitter/web-tree-sitter.wasm'));
 await Parser.init({ locateFile: () => treeSitterWasmPath });
 
 const javaGrammarWasmPath = fileURLToPath(new URL('../../wasm/tree-sitter-java_orchard.wasm', import.meta.url));
