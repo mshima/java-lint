@@ -1,29 +1,29 @@
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import type { Linter } from 'eslint';
-import { createRequire } from 'node:module';
 
 import { parse as javaParser } from '../java-parser.js';
 import { javaProcessor } from './processor.js';
 import { noUnusedImports } from './rules/no-unused-imports.js';
 
-const require = createRequire(import.meta.url);
-
-const name = 'java-lint';
-const version: string = (require('../../package.json') as { version: string }).version;
+const name = 'eslint-plugin-java';
+const packageJsonPath = fileURLToPath(import.meta.resolve('../../package.json'));
+const version: string = (JSON.parse(readFileSync(packageJsonPath, 'utf-8')) as { version: string }).version;
 
 const rules = {
   'no-unused-imports': noUnusedImports,
 } satisfies Record<string, import('eslint').Rule.RuleModule>;
 
 /**
- * The java-lint ESLint plugin.
+ * The eslint-plugin-java ESLint plugin.
  *
  * @example
  * ```js
  * // eslint.config.js
- * import javaLint from 'java-lint/plugin';
+ * import javaPlugin from 'eslint-plugin-java/plugin';
  *
  * export default [
- *   javaLint.configs.recommended,
+ *   javaPlugin.configs.recommended,
  * ];
  * ```
  */
@@ -50,19 +50,19 @@ const plugin = {
 
 /**
  * Recommended flat-config configuration.
- * Applies the java-lint plugin, its custom parser, the java processor, and the
+ * Applies the eslint-plugin-java plugin, its custom parser, the java processor, and the
  * `no-unused-imports` rule to all `.java` files.
  */
 const recommended: Linter.Config = {
-  name: 'java-lint/recommended',
+  name: 'eslint-plugin-java/recommended',
   files: ['**/*.java'],
-  plugins: { 'java-lint': plugin },
+  plugins: { 'eslint-plugin-java': plugin },
   languageOptions: {
     parser: { parse: javaParser },
   },
   processor: javaProcessor,
   rules: {
-    'java-lint/no-unused-imports': 'warn',
+    'eslint-plugin-java/no-unused-imports': 'warn',
   },
 };
 
