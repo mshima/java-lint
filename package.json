@@ -2,6 +2,18 @@
   "name": "eslint-plugin-java",
   "version": "0.3.0",
   "description": "ESLint plugin and utilities for Java",
+  "homepage": "https://github.com/mshima/eslint-plugin-java",
+  "bugs": "https://github.com/mshima/eslint-plugin-java/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mshima/eslint-plugin-java.git"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/marcelo-boveto-shima"
+  },
+  "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,44 +25,21 @@
     }
   },
   "types": "./dist/index.d.ts",
-  "homepage": "https://github.com/mshima/eslint-plugin-java",
-  "bugs": "https://github.com/mshima/eslint-plugin-java/issues",
-  "type": "module",
   "files": [
     "dist",
     "wasm"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mshima/eslint-plugin-java.git"
-  },
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/marcelo-boveto-shima"
-  },
-  "license": "MIT",
   "scripts": {
     "build": "tsc && npm run copy:wasm",
     "copy:wasm": "cpy node_modules/tree-sitter-java-orchard/tree-sitter-java_orchard.wasm wasm/ --flat",
+    "format": "prettier --write package.json vitest.config.ts .prettierrc.json eslint.config.ts tsconfig.json src/",
+    "lint": "eslint . --fix",
     "prepare": "npm run build",
     "pretest": "eslint && prettier . --check",
-    "test": "vitest run --coverage",
-    "lint": "eslint . --fix",
-    "format": "prettier --write package.json vitest.config.ts .prettierrc.json eslint.config.ts tsconfig.json src/"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "web-tree-sitter": "^0.26.8"
-  },
-  "peerDependencies": {
-    "eslint": ">=9"
-  },
-  "peerDependenciesMeta": {
-    "eslint": {
-      "optional": true
-    }
-  },
-  "engines": {
-    "node": ">=22"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -67,5 +56,16 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.0",
     "vitest": "^4.1.2"
+  },
+  "peerDependencies": {
+    "eslint": ">=9"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
