@@ -1,14 +1,8 @@
 import { RuleTester } from 'eslint';
-import { beforeAll, describe, it } from 'vitest';
+import { describe, it } from 'vitest';
 
 import { parse as javaParser } from '../java-parser.js';
-import { parserReady } from '../unused-imports/unused-imports.js';
 import { noUnusedImports } from './rules/no-unused-imports.js';
-
-// Ensure the tree-sitter WASM parser is ready before any rule tests run.
-beforeAll(async () => {
-  await parserReady;
-});
 
 const ruleTester = new RuleTester({
   // Use the java-lint parser so that ESLint can load .java-like source.

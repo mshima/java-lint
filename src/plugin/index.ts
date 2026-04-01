@@ -2,10 +2,8 @@ import type { Linter } from 'eslint';
 import { createRequire } from 'node:module';
 
 import { parse as javaParser } from '../java-parser.js';
-import { parserReady } from '../unused-imports/unused-imports.js';
+import { javaProcessor } from './processor.js';
 import { noUnusedImports } from './rules/no-unused-imports.js';
-
-export { parserReady };
 
 const require = createRequire(import.meta.url);
 
@@ -40,6 +38,11 @@ const plugin = {
     java: { parse: javaParser },
   },
 
+  /** Processors exported by this plugin. */
+  processors: {
+    java: javaProcessor,
+  },
+
   rules,
 
   configs: {} as Record<string, Linter.Config>,
@@ -47,7 +50,8 @@ const plugin = {
 
 /**
  * Recommended flat-config configuration.
- * Applies the java-lint plugin and its `no-unused-imports` rule to all `.java` files.
+ * Applies the java-lint plugin, its custom parser, the java processor, and the
+ * `no-unused-imports` rule to all `.java` files.
  */
 const recommended: Linter.Config = {
   name: 'java-lint/recommended',
@@ -56,6 +60,7 @@ const recommended: Linter.Config = {
   languageOptions: {
     parser: { parse: javaParser },
   },
+  processor: javaProcessor,
   rules: {
     'java-lint/no-unused-imports': 'warn',
   },

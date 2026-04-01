@@ -1,14 +1,14 @@
 import type { Rule } from 'eslint';
 
-import { findUnusedImports, resolvedParser } from '../../unused-imports/unused-imports.js';
+import { parser } from '../processor.js';
+import { findUnusedImports } from '../../unused-imports/analysis.js';
 
 /**
  * ESLint rule that reports (and auto-fixes) unused Java import declarations.
  *
- * Because the underlying tree-sitter WebAssembly is initialised asynchronously
- * at module-load time, the rule silently skips analysis when the parser is not
- * yet ready (which should only happen in the rare case where ESLint begins
- * linting before the WASM has been fully loaded).
+ * The tree-sitter parser is initialised at module-load time (via top-level
+ * `await` in `processor.ts`), so it is always available by the time any rule
+ * visitor runs.
  */
 export const noUnusedImports: Rule.RuleModule = {
   meta: {
@@ -28,13 +28,8 @@ export const noUnusedImports: Rule.RuleModule = {
   create(context) {
     return {
       'Program:exit'() {
-        if (!resolvedParser) {
-          // Parser not yet ready – skip silently.
-          return;
-        }
-
         const source = context.sourceCode.getText();
-        const unusedImports = findUnusedImports(source, resolvedParser);
+        const unusedImports = findUnusedImports(source, parser);
 
         for (const { fixStartIndex, fixEndIndex, nodeStartIndex, nodeEndIndex, name } of unusedImports) {
           context.report({

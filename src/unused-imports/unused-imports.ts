@@ -9,46 +9,15 @@ export { findUnusedImports } from './analysis.js';
 
 const require = createRequire(import.meta.url);
 
-/**
- * The resolved tree-sitter Java parser instance once the WebAssembly has been
- * initialised, or `null` if initialisation is still in progress.
- * Consumers that need synchronous access (e.g. the ESLint rule) can check this
- * value; async consumers should await {@link parserReady} instead.
- */
-export let resolvedParser: Parser | null = null;
+const treeSitterWasmPath = require.resolve('web-tree-sitter/web-tree-sitter.wasm');
+await Parser.init({ locateFile: () => treeSitterWasmPath });
 
-let parserPromise: Promise<Parser> | null = null;
+const javaGrammarWasmPath = require.resolve('tree-sitter-java-orchard/tree-sitter-java_orchard.wasm');
+const javaWasmBytes = readFileSync(javaGrammarWasmPath);
+const Java = await Language.load(javaWasmBytes);
 
-/**
- * Returns a singleton promise that initialises and caches the tree-sitter Java parser.
- * The WebAssembly binaries are loaded lazily on the first call.
- *
- * @returns a promise resolving to the configured tree-sitter {@link Parser}
- */
-const getParser = (): Promise<Parser> => {
-  if (!parserPromise) {
-    parserPromise = (async () => {
-      const treeSitterWasmPath = require.resolve('web-tree-sitter/web-tree-sitter.wasm');
-      await Parser.init({ locateFile: () => treeSitterWasmPath });
-
-      const javaGrammarWasmPath = require.resolve('tree-sitter-java-orchard/tree-sitter-java_orchard.wasm');
-      const javaWasmBytes = readFileSync(javaGrammarWasmPath);
-      const Java = await Language.load(javaWasmBytes);
-
-      const parser = new Parser();
-      parser.setLanguage(Java);
-      resolvedParser = parser;
-      return parser;
-    })();
-  }
-  return parserPromise;
-};
-
-/**
- * A promise that resolves to the initialised tree-sitter Java parser.
- * Awaiting this guarantees the parser is ready for synchronous use.
- */
-export const parserReady: Promise<Parser> = getParser();
+const parser = new Parser();
+parser.setLanguage(Java);
 
 /**
  * Removes unused import declarations from Java source code.
@@ -59,9 +28,7 @@ export const parserReady: Promise<Parser> = getParser();
  * @param content the Java source file content
  * @returns the source content with unused imports removed
  */
-export const removeUnusedImports = async (content: string): Promise<string> => {
-  const parser = await getParser();
-
+export const removeUnusedImports = (content: string): string => {
   const unusedImports = findUnusedImports(content, parser);
   if (unusedImports.length === 0) return content;
 

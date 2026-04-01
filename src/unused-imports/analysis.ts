@@ -69,12 +69,12 @@ const collectUsedIdentifiers = (node: Node): Set<string> => {
 
 /**
  * Analyses the given Java source code and returns information about each unused import.
- * The results are sorted in reverse source order (highest start index first) so that
+ * The results are sorted in reverse source order (highest node start index first) so that
  * callers applying fixes via string-slicing can do so without index shifting.
  *
  * @param content Java source code to analyse
  * @param parser  An initialised tree-sitter {@link Parser} configured with the Java grammar
- * @returns An array of {@link UnusedImportInfo} objects, sorted by descending start index
+ * @returns An array of {@link UnusedImportInfo} objects, sorted by descending node start index
  */
 export const findUnusedImports = (content: string, parser: Parser): UnusedImportInfo[] => {
   const tree = parser.parse(content);
