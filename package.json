@@ -1,10 +1,16 @@
 {
   "name": "java-lint",
   "version": "0.3.0",
-  "description": "Java lint utilities",
+  "description": "ESLint plugin and utilities for Java",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "default": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin/index.d.ts",
+      "default": "./dist/plugin/index.js"
+    }
   },
   "types": "./dist/index.d.ts",
   "homepage": "https://github.com/mshima/java-lint",
@@ -32,6 +38,14 @@
   "dependencies": {
     "tree-sitter-java-orchard": "^0.5.5",
     "web-tree-sitter": "^0.26.7"
+  },
+  "peerDependencies": {
+    "eslint": ">=9"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": true
+    }
   },
   "engines": {
     "node": "^18.13.0 || >= 20.2.0"
