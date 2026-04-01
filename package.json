@@ -33,6 +33,7 @@
     "build": "tsc && npm run copy:wasm",
     "copy:wasm": "cpy node_modules/tree-sitter-java-orchard/tree-sitter-java_orchard.wasm wasm/ --flat",
     "prepare": "npm run build",
+    "pretest": "eslint && prettier . --check",
     "test": "vitest run --coverage",
     "lint": "eslint . --fix",
     "format": "prettier --write package.json vitest.config.ts .prettierrc.json eslint.config.ts tsconfig.json src/"
