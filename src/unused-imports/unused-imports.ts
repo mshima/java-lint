@@ -1,21 +1,7 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-
-import { Language, Parser } from 'web-tree-sitter';
-
+import { parser } from '../tree-sitter-java.js';
 import { findUnusedImports } from './analysis.js';
 
 export { findUnusedImports } from './analysis.js';
-
-const treeSitterWasmPath = fileURLToPath(import.meta.resolve('web-tree-sitter/web-tree-sitter.wasm'));
-await Parser.init({ locateFile: () => treeSitterWasmPath });
-
-const javaGrammarWasmPath = fileURLToPath(new URL('../../wasm/tree-sitter-java_orchard.wasm', import.meta.url));
-const javaWasmBytes = readFileSync(javaGrammarWasmPath);
-const Java = await Language.load(javaWasmBytes);
-
-const parser = new Parser();
-parser.setLanguage(Java);
 
 /**
  * Removes unused import declarations from Java source code.
