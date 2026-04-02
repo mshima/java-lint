@@ -18,10 +18,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./plugin": {
-      "types": "./dist/plugin/index.d.ts",
-      "default": "./dist/plugin/index.js"
     }
   },
   "types": "./dist/index.d.ts",
