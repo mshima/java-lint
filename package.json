@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-java-lang",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "ESLint plugin and utilities for Java",
   "homepage": "https://github.com/mshima/eslint-plugin-java-lang",
   "bugs": "https://github.com/mshima/eslint-plugin-java-lang/issues",
