@@ -7,7 +7,7 @@ import { javaProcessor } from './processor.js';
 import { noUnusedImports } from './rules/no-unused-imports/index.js';
 
 const name = 'eslint-plugin-java-lang';
-const packageJsonPath = fileURLToPath(import.meta.resolve('../../package.json'));
+const packageJsonPath = fileURLToPath(import.meta.resolve('../package.json'));
 const version: string = (JSON.parse(readFileSync(packageJsonPath, 'utf-8')) as { version: string }).version;
 
 const rules = {
@@ -20,7 +20,7 @@ const rules = {
  * @example
  * ```js
  * // eslint.config.js
- * import javaPlugin from 'eslint-plugin-java-lang/plugin';
+ * import javaPlugin from 'eslint-plugin-java-lang';
  *
  * export default [
  *   javaPlugin.configs.recommended,
