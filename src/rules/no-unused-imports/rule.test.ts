@@ -1,7 +1,7 @@
 import { RuleTester } from 'eslint';
 import { describe, it } from 'vitest';
 
-import { parse as javaParser } from '../../../java-parser.ts';
+import { parse as javaParser } from '../../java-parser.ts';
 import { noUnusedImports } from './index.js';
 
 const ruleTester = new RuleTester({

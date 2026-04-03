@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint';
 
-export { parser } from '../tree-sitter-java.js';
+export { parser } from './tree-sitter-java.js';
 
 /**
  * ESLint processor for `.java` files.
